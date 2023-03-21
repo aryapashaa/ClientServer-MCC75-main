@@ -1,0 +1,45 @@
+﻿<h1>List Employee</h1>
+@*<div class="btn-export">
+    <button type="button" class="btn btn-primary" id="copy">Copy</button>
+    <button type="button" class="btn btn-primary" id="csv">CSV</button>
+    <button type="button" class="btn btn-primary" id="excel">Excel</button>
+    <button type="button" class="btn btn-primary" id="pdf">PDF</button>
+    <button type="button" class="btn btn-primary" id="print">Print</button>
+</div>*@
+<table id="myTable" class="table table-hover table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>No</th>
+            <th>NIK</th>
+            <th>Nama</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="tbodyEmployee">
+    </tbody>
+
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalEmployee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/employee.js" asp-append-version="true"></script>
+}

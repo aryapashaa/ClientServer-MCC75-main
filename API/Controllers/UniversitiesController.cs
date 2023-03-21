@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class UniversitiesController : BaseController<int, University, UniversityRepository>
 {
     public UniversitiesController(UniversityRepository repository) : base(repository)
