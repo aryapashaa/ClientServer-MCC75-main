@@ -103,7 +103,7 @@ $(document).ready(function () {
 						</a>
 					</button>
 
-					<button class="btn btn-danger dt-delete" onclick="delete(
+					<button class="btn btn-danger dt-delete" onclick="remove(
 					)" data-bs-toggle="modal" data-bs-target="#modalDelete">
 						<a data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
 							<i class="fa fa-remove"></i>
@@ -143,51 +143,76 @@ function detail(nik, firstName, lastName, birthDate, gender, hiringDate, email, 
 function validation() {
     let txt = ` <form class="row g-3 needs-validation" novalidate>
                   <div class="col-md-4 position-relative">
-                    <label for="validationTooltip01" class="form-label">First name</label>
+                    <label for="validationTooltipNik" class="form-label">NIK</label>
+                    <div class="input-group has-validation">
+                      <input type="text" class="form-control" id="validationTooltipNik" aria-describedby="validationTooltipNikPrepend" required>
+                      <div class="invalid-tooltip">
+                        Please choose a unique and valid nik.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 position-relative">
+                    <label for="validationTooltip01" class="form-label">Nama Depan</label>
                     <input type="text" class="form-control" id="validationTooltip01" value="Mark" required>
                     <div class="valid-tooltip">
                       Looks good!
                     </div>
                   </div>
                   <div class="col-md-4 position-relative">
-                    <label for="validationTooltip02" class="form-label">Last name</label>
+                    <label for="validationTooltip02" class="form-label">Nama Belakang</label>
                     <input type="text" class="form-control" id="validationTooltip02" value="Otto" required>
                     <div class="valid-tooltip">
                       Looks good!
                     </div>
                   </div>
                   <div class="col-md-4 position-relative">
-                    <label for="validationTooltipUsername" class="form-label">Username</label>
-                    <div class="input-group has-validation">
-                      <span class="input-group-text" id="validationTooltipUsernamePrepend">@</span>
-                      <input type="text" class="form-control" id="validationTooltipUsername" aria-describedby="validationTooltipUsernamePrepend" required>
-                      <div class="invalid-tooltip">
-                        Please choose a unique and valid username.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 position-relative">
-                    <label for="validationTooltip03" class="form-label">City</label>
-                    <input type="text" class="form-control" id="validationTooltip03" required>
-                    <div class="invalid-tooltip">
-                      Please provide a valid city.
+                    <label for="birth">Tanggal Lahir:</label>
+                    <input type="date" id="birth" name="birthDate"
+                           value="2000-01-01"
+                           min="1945-01-01" max="2023-03-26">
+                    <div class="valid-tooltip">
+                      Looks good!
                     </div>
                   </div>
                   <div class="col-md-3 position-relative">
-                    <label for="validationTooltip04" class="form-label">State</label>
-                    <select class="form-select" id="validationTooltip04" required>
-                      <option selected disabled value="">Choose...</option>
-                      <option>...</option>
+                    <label for="validationTooltip03" class="form-label">Jenis Kelamin</label>
+                    <select class="form-select" id="validationTooltip03" required>
+                      <option selected disabled value="">Pilih...</option>
+                      <option>Laki-Laki</option>
+                      <option>Perempuan</option>
                     </select>
                     <div class="invalid-tooltip">
-                      Please select a valid state.
+                      Please select a valid gender.
+                    </div>
+                  </div>
+                  <div class="col-md-4 position-relative">
+                    <label for="hiring">Tanggal Masuk:</label>
+                    <input type="date" id="hiring" name="hiringDate"
+                           value="2023-01-01"
+                           min="2023-01-01" max="2023-03-26">
+                    <div class="valid-tooltip">
+                      Looks good!
                     </div>
                   </div>
                   <div class="col-md-3 position-relative">
-                    <label for="validationTooltip05" class="form-label">Zip</label>
+                    <label for="validationTooltip04" class="form-label">E-Mail</label>
+                    <input type="text" class="form-control" id="validationTooltip04" required>
+                    <div class="invalid-tooltip">
+                      Please provide a valid e-mail.
+                    </div>
+                  </div>
+                  <div class="col-md-3 position-relative">
+                    <label for="validationTooltip05" class="form-label">Handphone</label>
                     <input type="text" class="form-control" id="validationTooltip05" required>
                     <div class="invalid-tooltip">
-                      Please provide a valid zip.
+                      Please provide a valid phone number.
+                    </div>
+                  </div>
+                  <div class="col-md-3 position-relative">
+                    <label for="validationTooltip06" class="form-label">Manager ID</label>
+                    <input type="text" class="form-control" id="validationTooltip06" required>
+                    <div class="invalid-tooltip">
+                      Please provide a valid manager id.
                     </div>
                   </div>
                   <div class="col-12">
@@ -226,3 +251,13 @@ function insert() {
         alert('Data Insert Failed');
     })
 }
+
+// Edit
+function edit() {
+
+};
+
+// Remove
+function remove() {
+
+};
