@@ -1,6 +1,4 @@
-﻿let editor;
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     //editor = new $.fn.datatable.editor({
     //    "ajax": "https://localhost:7205/api/employees",
     //    "table": "#mytable",
@@ -14,7 +12,7 @@ $(document).ready(function () {
     //        "label": "nama belakang:",
     //        "name": "lastname"
     //    }
-            //, {
+    //, {
     //        "label": "Tanggal Lahir:",
     //        "name": "birthDate",
     //        "type": "datetime"
@@ -58,7 +56,8 @@ $(document).ready(function () {
             { extend: 'print', text: '<i class="fa fa-print"></i>', titleAttr: 'Print', className: 'btn btn-outline-info' }
         ],
         ajax: {
-            url: "https://localhost:7205/api/Employees", //=> CORS
+            url: "https://localhost:7205/api/Employees",
+            type: "GET",//=> CORS
             dataSrc: "data",
             dataType: "JSON"
         },
@@ -103,7 +102,7 @@ $(document).ready(function () {
 						</a>
 					</button>
 
-					<button class="btn btn-danger dt-delete" onclick="remove(
+					<button class="btn btn-danger dt-delete" id="hapus" onclick="remove(
 					)" data-bs-toggle="modal" data-bs-target="#modalDelete">
 						<a data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
 							<i class="fa fa-remove"></i>
@@ -114,6 +113,10 @@ $(document).ready(function () {
             },
         ],
     });
+    $("#plus").html(`<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalInsert" onclick="create()">
+    <i class="fas fa-plus"></i>
+    <span aria-hidden="true"></span>
+</button>`);
 });
 
 // Detail
@@ -136,128 +139,141 @@ function detail(nik, firstName, lastName, birthDate, gender, hiringDate, email, 
               `;
 
     $(".modal-body").html(txt);
-    $("h1#modalLabelDetail.modal-title").html(firstName);
-}
-
-// Validation
-function validation() {
-    let txt = ` <form class="row g-3 needs-validation" novalidate>
-                  <div class="col-md-4 position-relative">
-                    <label for="validationTooltipNik" class="form-label">NIK</label>
-                    <div class="input-group has-validation">
-                      <input type="text" class="form-control" id="validationTooltipNik" aria-describedby="validationTooltipNikPrepend" required>
-                      <div class="invalid-tooltip">
-                        Please choose a unique and valid nik.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4 position-relative">
-                    <label for="validationTooltip01" class="form-label">Nama Depan</label>
-                    <input type="text" class="form-control" id="validationTooltip01" value="Mark" required>
-                    <div class="valid-tooltip">
-                      Looks good!
-                    </div>
-                  </div>
-                  <div class="col-md-4 position-relative">
-                    <label for="validationTooltip02" class="form-label">Nama Belakang</label>
-                    <input type="text" class="form-control" id="validationTooltip02" value="Otto" required>
-                    <div class="valid-tooltip">
-                      Looks good!
-                    </div>
-                  </div>
-                  <div class="col-md-4 position-relative">
-                    <label for="birth">Tanggal Lahir:</label>
-                    <input type="date" id="birth" name="birthDate"
-                           value="2000-01-01"
-                           min="1945-01-01" max="2023-03-26">
-                    <div class="valid-tooltip">
-                      Looks good!
-                    </div>
-                  </div>
-                  <div class="col-md-3 position-relative">
-                    <label for="validationTooltip03" class="form-label">Jenis Kelamin</label>
-                    <select class="form-select" id="validationTooltip03" required>
-                      <option selected disabled value="">Pilih...</option>
-                      <option>Laki-Laki</option>
-                      <option>Perempuan</option>
-                    </select>
-                    <div class="invalid-tooltip">
-                      Please select a valid gender.
-                    </div>
-                  </div>
-                  <div class="col-md-4 position-relative">
-                    <label for="hiring">Tanggal Masuk:</label>
-                    <input type="date" id="hiring" name="hiringDate"
-                           value="2023-01-01"
-                           min="2023-01-01" max="2023-03-26">
-                    <div class="valid-tooltip">
-                      Looks good!
-                    </div>
-                  </div>
-                  <div class="col-md-3 position-relative">
-                    <label for="validationTooltip04" class="form-label">E-Mail</label>
-                    <input type="text" class="form-control" id="validationTooltip04" required>
-                    <div class="invalid-tooltip">
-                      Please provide a valid e-mail.
-                    </div>
-                  </div>
-                  <div class="col-md-3 position-relative">
-                    <label for="validationTooltip05" class="form-label">Handphone</label>
-                    <input type="text" class="form-control" id="validationTooltip05" required>
-                    <div class="invalid-tooltip">
-                      Please provide a valid phone number.
-                    </div>
-                  </div>
-                  <div class="col-md-3 position-relative">
-                    <label for="validationTooltip06" class="form-label">Manager ID</label>
-                    <input type="text" class="form-control" id="validationTooltip06" required>
-                    <div class="invalid-tooltip">
-                      Please provide a valid manager id.
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <button class="btn btn-primary" onclick="insert(
-					)" type="submit">Submit</button>
-                  </div>
-                </form>
-              `;
-
-    $(".modal-body").html(txt);
+    //$("h1#modalLabelDetail.modal-title").html(firstName);
 }
 
 // Insert
-function insert() {
-    var obj = new Object(); //sesuaikan sendiri nama objectnya dan beserta isinya
-    //ini ngambil value dari tiap inputan di form nya
-    obj.Nik = $("#nik").val();
-    obj.FirstName = $("#firstName").val();
-    obj.LastName = $("#lastName").val();
-    obj.BirthDate = $("#birthDate").val();
-    obj.Gender = $("#gender").val();
-    obj.HiringDate = $("#hiringDate").val();
-    obj.Email = $("#email").val();
-    obj.Handphone = $("#phoneNumber").val();
-    obj.ManagerId = $("managerId").val();
+function create() {
+    $("#modalLabelInsert").html("Create");
+    $("#modalBodyInsert").html(`<form id="create" method="post">
+                    <div class="form-group">
+                        <label for="nik">NIK</label>
+                        <input type="text" class="nik" id="nik" name="nik" placeholder="Nik">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" class="firstName" id="firstName" name="firstName" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" class="lastName" id="lastName" name="lastName" placeholder="Last Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate">Birth Date</label>
+                        <input type="datetime-local" class="birthDate" id="birthDate" name="birthDate" placeholder="Birth Date">
+                    </div>
+                    <div class="input-group mb-3">
+                      <label class="input-group-text" for="gender">Gender</label>
+                      <select class="form-select" id="gender">
+                        <option value="0">Laki-Laki</option>
+                        <option value="1">Perempuan</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="hiringDate">Hiring Date</label>
+                        <input type="datetime-local" class="hiringDate" id="hiringDate" name="hiringDate" placeholder="Hiring Date">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="email" id="email" name="email" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="text" class="phoneNumber" id="phoneNumber" name="phoneNumber" placeholder="Phone Number">
+                    </div>
+                    <div class="form-group">
+                        <label for="managerId">Manager ID</label>
+                        <input type="text" class="managerId" id="managerId" name="managerId" placeholder="Manager ID">
+                    </div>
+					
+                </form>
+                `);
 
-    //isi dari object kalian buat sesuai dengan bentuk object yang akan di post
-    $.ajax({
-        url: "https://localhost:7205/api/Employees",
-        type: "POST",
-        dataType: "JSON",
-        data: JSON.stringify(obj) //jika terkena 415 unsupported media type (tambahkan headertype Json & JSON.Stringify();)
-    }).done((result) => {
-        alert('Data Insert Successfully');
-    }).fail((error) => {
-        alert('Data Insert Failed');
+    $('#employee').click(function (e) {
+        e.preventDefault();
+        let obj = {}; //sesuaikan sendiri nama objectnya dan beserta isinya
+        //ini ngambil value dari tiap inputan di form nya
+        obj.nik = $("#nik").val();
+        obj.firstName = $("#firstName").val();
+        obj.lastName = $("#lastName").val();
+        obj.birthDate = $("#birthDate").val();
+        obj.gender = parseInt($("#gender").val());
+        obj.hiringDate = $("#hiringDate").val();
+        obj.email = $("#email").val();
+        obj.phoneNumber = $("#phoneNumber").val();
+        obj.managerId = $("managerId").val();
+
+        //isi dari object kalian buat sesuai dengan bentuk object yang akan di post
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=utf-8',
+                'Access-Control-Allow-Origin': "*",
+                "crossDomain": true,
+            },
+            url: "https://localhost:7205/api/Employees",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(obj) //jika terkena 415 unsupported media type (tambahkan headertype Json & JSON.Stringify();)
+        }).done(() => {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            $("#modalInsert").modal('hide');
+            $('#myTable').DataTable().ajax.reload();
+        }).fail(() => {
+            //console.log(obj);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!'
+            });
+            //$("#modalInsert").modal('hide');
+        })
     })
 }
 
-// Edit
-function edit() {
+//// Edit
+//function edit() {
 
-};
+//};
 
 // Remove
 function remove() {
-
+    $('#hapus').click(function (e) {
+        e.preventDefault();
+        
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=utf-8',
+                'Access-Control-Allow-Origin': "*",
+                "crossDomain": true,
+            },
+            url: "https://localhost:7205/api/Employees/${'nik'}",
+            type: "DELETE",
+            dataType: "json",
+        }).done(() => {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Removed',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            $('#myTable').DataTable().ajax.reload();
+        }).fail(() => {
+            //console.log(obj);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!'
+            });
+            //$("#modalInsert").modal('hide');
+        })
+    })
 };

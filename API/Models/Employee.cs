@@ -9,9 +9,9 @@ namespace API.Models;
 public class Employee
 {
     [Key, Column("nik", TypeName = "nchar(5)")]
-    public string NIK { get; set; }
+    public string? NIK { get; set; }
     [Required, Column("first_name"), MaxLength(50)]
-    public string FirstName { get; set; }
+    public string? FirstName { get; set; }
     [Column("last_name"), MaxLength(50)]
     public string? LastName { get; set; }
     [Required, Column("birthdate")]
@@ -21,7 +21,7 @@ public class Employee
     [Required, Column("hiring_date")]
     public DateTime HiringDate { get; set; } = DateTime.Now;
     [Required, Column("email"), MaxLength(50)]
-    public string Email { get; set; }
+    public string? Email { get; set; }
     [Column("phone_number"), MaxLength(20)]
     public string? PhoneNumber { get; set; }
     [Column("manager_id", TypeName = "nchar(5)")]

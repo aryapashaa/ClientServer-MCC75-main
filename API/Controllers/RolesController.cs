@@ -1,8 +1,8 @@
 ﻿using API.Repositories.Data;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
-using API.Base;
 using Microsoft.AspNetCore.Authorization;
+using API.Base;
 
 namespace API.Controllers;
 
