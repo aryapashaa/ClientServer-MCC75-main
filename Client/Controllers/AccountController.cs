@@ -28,7 +28,7 @@ public class AccountController : BaseController<Account, AccountRepository, int>
     public async Task<IActionResult> Create(Account account)
     {
         var result = await _accountRepository.Post(account);
-        if (result.Status == 200)
+        if (result.StatusCode == "200")
         {
             RedirectToAction("Index");
         }

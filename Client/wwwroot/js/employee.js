@@ -102,7 +102,7 @@
 						</a>
 					</button>
 
-					<button class="btn btn-danger dt-delete" id="hapus" onclick="remove(
+					<button class="btn btn-danger dt-delete" id="hapus" onclick="remove(${row['nik']}
 					)" data-bs-toggle="modal" data-bs-target="#modalDelete">
 						<a data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
 							<i class="fa fa-remove"></i>
@@ -243,37 +243,49 @@ function create() {
 //};
 
 // Remove
-function remove() {
-    $('#hapus').click(function (e) {
-        e.preventDefault();
-        
-        $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=utf-8',
-                'Access-Control-Allow-Origin': "*",
-                "crossDomain": true,
-            },
-            url: "https://localhost:7205/api/Employees/${'nik'}",
-            type: "DELETE",
-            dataType: "json",
-        }).done(() => {
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Removed',
-                showConfirmButton: false,
-                timer: 1500
-            });
-            $('#myTable').DataTable().ajax.reload();
-        }).fail(() => {
-            //console.log(obj);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!'
-            });
-            //$("#modalInsert").modal('hide');
-        })
+function remove(nik) {
+    console.log(nik)
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success ml-2',
+            cancelButton: 'btn btn-danger mr-2'
+        },
+        buttonsStyling: false
     })
-};
+
+    swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "DELETE",
+                url: `https://localhost:7205/api/Employees?key=${nik}`,
+                data: {}
+            }).done((result) => {
+                swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                ).then(function () {
+                    $('#myTable').DataTable().ajax.reload();
+                });
+            });
+        } else if (
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'Your imaginary file is safe :)',
+                'error'
+            ).then(function () {
+                $('#myTable').DataTable().ajax.reload();
+            });
+        }
+    });
+}
