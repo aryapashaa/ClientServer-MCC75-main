@@ -1,21 +1,13 @@
 using Client.Repositories.Data;
-using Client.Models;
-using Microsoft.DotNet.Scaffolding.Shared.ProjectModel;
-using Client.Repositories.Interface;
-using API.Contexts;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Configure DbContext to Sql Server Database
-var connectionString = builder.Configuration.GetConnectionString("Connection");
-builder.Services.AddDbContext<MyContext>(options => options.UseSqlServer(connectionString));
-
 // Dependency Injection
 builder.Services.AddScoped<UniversityRepository>();
+builder.Services.AddScoped<AccountRepository>();
 
 var app = builder.Build();
 

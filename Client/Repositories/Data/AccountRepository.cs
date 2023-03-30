@@ -1,5 +1,4 @@
-﻿using API.ViewModels;
-using Client.Models;
+﻿using Client.Models;
 using Client.ViewModels;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Newtonsoft.Json;
@@ -7,7 +6,7 @@ using System.Text;
 
 namespace Client.Repositories.Data;
 
-public class AccountRepository : GeneralRepository<Account, int>
+public class AccountRepository : GeneralRepository<Account, string>
 {
 	private readonly HttpClient _httpClient;
 	private readonly string request;

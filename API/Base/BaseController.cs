@@ -79,7 +79,7 @@ public class BaseController<Key, Entity, Repository> : ControllerBase
             return BadRequest(new { statusCode = 400, message = "Something Wrong!" });
         }
     }
-    [HttpDelete]
+    [HttpDelete("{key}")]
     public async Task<ActionResult> Delete(Key key)
     {
         try

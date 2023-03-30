@@ -69,7 +69,7 @@ public class GeneralRepository<Entity, Key> : IRepository<Entity, Key>
 	{
 		ResponseStatusVM entityVM = null;
 		StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-		using (var response = _httpClient.PutAsync(request + id, content).Result)
+		using (var response = _httpClient.PutAsync(request, content).Result)
 		{
 			string apiResponse = await response.Content.ReadAsStringAsync();
 			entityVM = JsonConvert.DeserializeObject<ResponseStatusVM>(apiResponse);

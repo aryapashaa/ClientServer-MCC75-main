@@ -98,8 +98,8 @@ public class UniversityController : BaseController<University,UniversityReposito
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
-		var result = await _universityrepository.Get(id);
-		return View(result.Data);
+        var result = await _universityrepository.Get(id);
+        return View(result.Data);
 	}
 
     // Delete - POST
